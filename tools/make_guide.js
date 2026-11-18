@@ -57,7 +57,7 @@ function table(headers, rows, widths) {
 const body = [
   new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun("E-Drum Kit Manager")] }),
   new Paragraph({ children: [new TextRun({ text: "The complete guide, with step-by-step lessons", size: 32 })], spacing: { after: 240 } }),
-  p("For Windows and Mac, with REAPER. Version 1.3."),
+  p("For Windows and Mac, with REAPER. Version 1.4."),
   p("This guide explains everything in plain words. You don't need to know anything about computers or recording to follow it. If a word looks unfamiliar, look it up in the chapter called \"Words you will see.\""),
   h2("Moving around this guide"),
   p("The guide uses headings at two levels:"),
@@ -501,7 +501,18 @@ const body = [
   Note("On a Mac, if REAPER uses your audio interface, set the Mac's sound output to the same interface: open System Settings, then Sound, then Output."),
   TipP("If the music is too loud compared to the drums, turn down the music player's own volume instead of your headphones."),
 
-  h1("17. When something goes wrong"),
+  h1("17. Keeping it up to date"),
+  p("New versions fix problems and add features. On Windows, E-Drum Kit Manager checks for a new version each time it starts, a few seconds after it opens. It only speaks up when there is one."),
+  ...steps([
+    "When a new version is found, a message tells you which version is available and which one you have.",
+    "Choose **Yes** to download and install it. E-Drum Kit Manager closes, updates itself, and opens again. Your kits and settings are kept.",
+    "Choose **No** to skip that version. You won't be asked about it again when the program starts.",
+    "Choose **Cancel** to decide later. You'll be asked again next time.",
+  ]),
+  p("To check yourself at any time, open the **Help** menu and choose **Check for updates**. To stop the automatic check, open the Help menu and uncheck **Check for updates at startup**."),
+  Note("On a Mac, download new versions from the [E-Drum Kit Manager download page](https://github.com/samarositz-rgb/e-drum-kit-manager/releases/latest)."),
+
+  h1("18. When something goes wrong"),
   ...table(["What happens", "What to try"], [
     ["\"REAPER did not answer\"", "Open REAPER. If you just installed or updated E-Drum Kit Manager, close REAPER and open it again, once."],
     ["Pads make no sound", "Press **Alt+X** (Reconnect drum module MIDI), then hit a pad. Check that the module is on and its cable is plugged in. This often happens after another program used your MIDI connection."],
@@ -517,7 +528,7 @@ const body = [
     ["On a Mac: \"E-Drum Kit Manager can't be opened\"", "Open System Settings, then Privacy & Security, and press Open Anyway next to the message about E-Drum Kit Manager."],
   ], [3000, 6360]),
 
-  h1("18. Keyboard shortcuts"),
+  h1("19. Keyboard shortcuts"),
   p("On Windows, **Alt+S** always means Save, in every window that has a Save button. The Mac keys are at the end of this chapter."),
   h2("Windows: main window"),
   ...table(["Key", "What it does"], [
@@ -582,7 +593,7 @@ const body = [
     ["Command+Q", "Quit E-Drum Kit Manager."],
   ], [3000, 6360]),
 
-  h1("19. Where your things are saved"),
+  h1("20. Where your things are saved"),
   ...bullets([
     "**Your kits and settings on Windows:** in your user folder, under AppData, Roaming, EDrumKitManager. Uninstalling the program keeps them.",
     "**Your kits and settings on a Mac:** in your home folder, under Library, Application Support, EDrumKitManager. Deleting the app keeps them.",

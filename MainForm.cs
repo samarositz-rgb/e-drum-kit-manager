@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms.Automation;
+using System.Windows.Forms.Automation;
 
 namespace TD12KitManager;
 
@@ -132,9 +132,14 @@ public sealed class MainForm : Form
             Item("&Start or stop", () => metronome.Toggle(), "F5"),
             Item("&Tap tempo", () => { metronome.Tap(); return Task.CompletedTask; }),
         ]);
+        var updatesItem = new ToolStripMenuItem("Check for updates at &startup") { CheckOnClick = true, Checked = Updates.CheckAtStartup };
+        updatesItem.Click += (_, _) => { Updates.CheckAtStartup = updatesItem.Checked; Status(updatesItem.Checked ? "E-Drum Kit Manager will check for updates when it starts." : "Automatic update checks are off. You can still check from the Help menu."); };
         var help = new ToolStripMenuItem("&Help");
         help.DropDownItems.AddRange([
             Item("&User guide", OpenGuide, shortcut: Keys.F1),
+            Item("Check for up&dates...", () => CheckForUpdates(startup: false)),
+            updatesItem,
+            new ToolStripSeparator(),
             Item("&About E-Drum Kit Manager", ShowAbout),
         ]);
         menu.Items.AddRange([file, kitMenu, tools, metroMenu, help]);
@@ -170,7 +175,12 @@ public sealed class MainForm : Form
             else if (e.KeyCode == Keys.F5) { e.SuppressKeyPress = true; await metronome.Toggle(); }
             else if (e.KeyCode == Keys.F6) { e.SuppressKeyPress = true; statusBox.Focus(); } // Alt+S means Save in the other windows
         };
-        Shown += async (_, _) => await Startup();
+        Shown += async (_, _) =>
+        {
+            await Startup();
+            // Quietly look for a newer version once the startup messages have been spoken.
+            if (Updates.CheckAtStartup && !store.IsFirstRun) { await Task.Delay(4000); await CheckForUpdates(startup: true); }
+        };
     }
 
     async Task Startup()
@@ -446,6 +456,53 @@ public sealed class MainForm : Form
         else
             Status("The user guide was not found next to the program. Reinstall E-Drum Kit Manager to restore it.");
         return Task.CompletedTask;
+    }
+
+    static Version CurrentVersion => typeof(MainForm).Assembly.GetName().Version ?? new Version(0, 0, 0);
+
+    /// <summary>Looks for a newer version. At startup it stays quiet unless there is one the user hasn't turned down.</summary>
+    async Task CheckForUpdates(bool startup)
+    {
+        UpdateInfo? update;
+        try
+        {
+            if (!startup) Status("Checking for updates...");
+            update = await Updates.CheckAsync(CurrentVersion);
+        }
+        catch (Exception ex)
+        {
+            if (!startup) Status("Couldn't check for updates. Check your internet connection and try again. (" + ex.Message + ")");
+            return;
+        }
+        string current = CurrentVersion.ToString(3);
+        if (update == null)
+        {
+            if (!startup) Status($"You have the latest version, {current}.");
+            return;
+        }
+        string latest = update.Version.ToString(3);
+        if (startup && Updates.SkippedVersion == latest) return;
+        Status($"Version {latest} of E-Drum Kit Manager is available. You have {current}.");
+        var answer = MessageBox.Show(this,
+            $"Version {latest} of E-Drum Kit Manager is available. You have version {current}.\n\n" +
+            "Download and install it now? E-Drum Kit Manager closes while it updates and opens again afterwards. Your kits and settings are kept.\n\n" +
+            "Choose No to skip this version, or Cancel to be asked again next time.",
+            "Update available", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
+        if (answer == DialogResult.No) { Updates.SkippedVersion = latest; Status($"Version {latest} skipped. Choose Check for updates in the Help menu to install it later."); return; }
+        if (answer != DialogResult.Yes) return;
+        try
+        {
+            Status($"Downloading version {latest}...");
+            string installer = await Updates.DownloadAsync(update);
+            Status($"Installing version {latest}. E-Drum Kit Manager will close and open again in a moment.");
+            await Task.Delay(1500); // let the screen reader finish the message
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(installer, "/SILENT /SUPPRESSMSGBOXES /NORESTART /RELAUNCH") { UseShellExecute = true });
+            Close();
+        }
+        catch (Exception ex)
+        {
+            Status("The update couldn't be downloaded: " + ex.Message + " You can also download it from the project's GitHub page.");
+        }
     }
 
     Task ShowAbout()

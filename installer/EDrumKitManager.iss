@@ -1,6 +1,6 @@
 ﻿; Installer for E-Drum Kit Manager (Inno Setup 6). Installs for the current user, no admin needed.
 #define AppName "E-Drum Kit Manager"
-#define AppVersion "1.3.0"
+#define AppVersion "1.4.0"
 
 [Setup]
 AppId={{6C4A2E31-7B5D-4E3A-9C1F-2D8E5B7A4F10}
@@ -43,7 +43,15 @@ Name: "{userdesktop}\{#AppName}"; Filename: "{app}\EDrumKitManager.exe"; Tasks: 
 [Run]
 Filename: "{app}\User Guide.html"; Description: "Read the user guide"; Flags: postinstall shellexec skipifsilent unchecked
 Filename: "{app}\EDrumKitManager.exe"; Description: "Start {#AppName}"; Flags: postinstall nowait skipifsilent
+; After an update from inside the program (silent, /RELAUNCH), open it again.
+Filename: "{app}\EDrumKitManager.exe"; Flags: nowait; Check: ShouldRelaunch
 
 [UninstallRun]
 ; Takes the REAPER helper script out of REAPER's startup. Kits and settings stay in AppData.
 Filename: "{app}\EDrumKitManager.exe"; Parameters: "--uninstall-reaper-bridge"; Flags: runhidden waituntilterminated; RunOnceId: "RemoveReaperBridge"
+
+[Code]
+function ShouldRelaunch: Boolean;
+begin
+  Result := WizardSilent and (Pos('/RELAUNCH', UpperCase(GetCmdTail)) > 0);
+end;

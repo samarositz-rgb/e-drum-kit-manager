@@ -50,6 +50,14 @@ static class Program
         }
         // Run by the uninstaller: take the bridge out of REAPER's startup.
         if (args.Length is 1 or 2 && args[0] == "--uninstall-reaper-bridge") { try { ReaperBridge.Uninstall(args.Length == 2 ? args[1] : null); } catch (Exception) { } return; }
+        // Diagnostic: --update-check out.txt [as-version] looks up the latest release, as if this were as-version.
+        if (args.Length is 2 or 3 && args[0] == "--update-check")
+        {
+            var current = args.Length == 3 ? Version.Parse(args[2]) : typeof(Program).Assembly.GetName().Version!;
+            try { var u = Updates.CheckAsync(current).GetAwaiter().GetResult(); File.WriteAllText(args[1], u == null ? "up to date" : $"{u.Version} {u.Size} {u.DownloadUrl}"); }
+            catch (Exception ex) { File.WriteAllText(args[1], ex.ToString()); }
+            return;
+        }
         // Diagnostic: --speech-check out.txt says whether the NVDA controller client loads and NVDA is running.
         if (args.Length == 2 && args[0] == "--speech-check") { File.WriteAllText(args[1], Speech.Check()); return; }
         // Diagnostic: --genkit profile.json kitIndex out.txt builds one kit for another module profile.
