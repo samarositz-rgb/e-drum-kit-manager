@@ -1,0 +1,457 @@
+﻿[
+    {
+        "Id":  "4e03522725d049108440603aa75d2dc4",
+        "Name":  "C\u0026C Player Date (Main Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "KD01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "SD01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "HA01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO01_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_03"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO01_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO01_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "RI01_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_06"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "a5b0d25135594dd78755f08b2436a5af",
+        "Name":  "Yamaha Absolute Hybrid Maple (Main Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "KD02_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "SD02_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "HA02_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_03"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "TO02_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "RI02_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR02_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR02_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_MainRoom",
+                          "Drum":  "CR01_06"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "e7b350b8810647e38f85d91fe0f7fdc5",
+        "Name":  "Gretsch USA Custom (Bright Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "KD03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "SD03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "HA03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO03_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO03_03"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO03_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO03_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "RI03_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_06"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "8cca0f78a7e849aa82b35878365d1cc8",
+        "Name":  "Ludwig Classic 3-Ply Maple (Bright Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "KD04_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "SD04_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "HA04_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO04_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO04_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO04_03"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO04_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "TO04_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "RI04_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR04_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR04_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_BrightRoom",
+                          "Drum":  "CR03_06"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "71d0fba5c1a74a7c87143ecf2d705596",
+        "Name":  "Premier Resonator (Tight Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "KD05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "SD05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "HA05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "RI05_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR05_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR05_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_05"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "5eb2826e19de4d938962603ca25cd459",
+        "Name":  "Ludwig Hollywood Maple (Tight Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "KD06_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "SD06_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "HA05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "RI05_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR05_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR05_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_05"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    },
+    {
+        "Id":  "038ba963e0e042b18b970582cb147a31",
+        "Name":  "Gretsch USA Custom Round Badge (Tight Room)",
+        "Source":  "EZdrummer factory kit",
+        "Td12KitNumber":  0,
+        "Slots":  [
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "KD07_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "SD07_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "HA07_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO07_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO06_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_01"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO07_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "TO05_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "RI07_04"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR05_02"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "CR07_05"
+                      },
+                      {
+                          "Lib":  "EZX3_EZdrummer3_TightRoom",
+                          "Drum":  "SP07_03"
+                      }
+                  ],
+        "RoomAmount":  100,
+        "OneShot":  "",
+        "OneShotPad":  "Aux 2",
+        "OneShotLevel":  100,
+        "OverheadsAmount":  100
+    }
+]

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>E-Drum Kit Manager User Guide (Mac)</title>
+<style>body { font-family: -apple-system, Helvetica, sans-serif; max-width: 48em; margin: 2em auto; line-height: 1.5; } kbd { font-family: inherit; font-weight: bold; }</style>
+</head>
+<body>
+<h1>E-Drum Kit Manager User Guide (Mac)</h1>
+<p>E-Drum Kit Manager lets you build, choose and switch EZdrummer 3 drum kits for your electronic drum kit, from a VoiceOver-friendly window. It runs alongside REAPER, which plays EZdrummer.</p>
+
+<h2>What you need</h2>
+<ul>
+<li>A Mac with Apple silicon, running macOS 14 or later.</li>
+<li>REAPER (version 7 or later). OSARA is recommended for screen reader users. The SWS Extension is optional; it lets the metronome volume be set.</li>
+<li>EZdrummer 3 and its Core Library, installed with Toontrack Product Manager and authorized. In REAPER it must load as the <strong>VST3</strong> version. If REAPER only lists the Audio Unit version, restart REAPER so it re-scans its plug-ins.</li>
+<li>An electronic drum module connected to the Mac by MIDI, either through a USB cable from the module or MIDI cables into your audio interface.</li>
+</ul>
+
+<h2>Important note</h2>
+<p>E-Drum Kit Manager is not made or supported by Toontrack or Roland. It works by reading and writing EZdrummer's own settings, which are not publicly documented. A future EZdrummer update could stop parts of it working. Keep your own backups of important EZdrummer presets.</p>
+
+<h2>First start</h2>
+<ol>
+<li>Open E-Drum Kit Manager. It installs a small helper script into REAPER that lets the two programs talk to each other.</li>
+<li><strong>Restart REAPER once</strong> so the helper script starts. After that it starts with REAPER automatically.</li>
+<li>The <strong>Hardware setup</strong> window opens. Choose your drum module. If it isn't listed, press <strong>Learn a new module</strong> (described below).</li>
+<li>Choose the MIDI input your drum module is connected to. If no MIDI ports are listed, turn your MIDI interface on in REAPER: REAPER menu, Settings, MIDI Devices.</li>
+<li>Press <strong>Save</strong>, then select a kit in the list and press <kbd>Return</kbd> to load it into EZdrummer.</li>
+</ol>
+<p>REAPER asks you to choose an audio device each time it starts until you pick one: REAPER menu, Settings, Audio, Device.</p>
+
+<h2>Learn my kit (any drum module)</h2>
+<p>This teaches E-Drum Kit Manager which MIDI note each part of your kit sends, and writes a matching EZdrummer map.</p>
+<ol>
+<li>Open <strong>Hardware setup</strong> (Tools menu) and press <strong>Learn a new module</strong>.</li>
+<li>Type your module's name and how many kits it has, then press <strong>Start learning</strong>.</li>
+<li>VoiceOver announces each step, for example "Hit the middle of the snare head." Hit firmly, once. It confirms the note it heard.</li>
+<li>Press <strong>Skip</strong> for anything your kit doesn't have, such as a fourth tom or extra pads.</li>
+<li>At the end, the module is saved. Choose it in Hardware setup and press Save.</li>
+</ol>
+<p>Hi-hats: you are asked to hit the top and edge both with the pedal pressed and with it open, and to step on the pedal. Many modules send the same note either way; that's fine.</p>
+
+<h2>Main window</h2>
+<p>Every command is in the menu bar: press <kbd>Control+Option+M</kbd> with VoiceOver to reach it. The menus are File, Kit, Tools, Metronome and Help. <kbd>Command+?</kbd> opens this guide. The commands that don't need a dialog are also buttons in the window.</p>
+<ul>
+<li>Kit list: <kbd>Return</kbd> loads the selected kit in REAPER, <kbd>F2</kbd> edits it, <kbd>Delete</kbd> deletes it, <kbd>Option+Up</kbd> and <kbd>Option+Down</kbd> move it in the list.</li>
+<li>Kit details: every drum in the selected kit. It is read-only text you can move through line by line.</li>
+<li>Load in REAPER, New kit (<kbd>Command+N</kbd>), Edit kit, Duplicate (<kbd>Command+D</kbd>), Delete.</li>
+<li>Import the kit currently in EZdrummer (File menu). Update the map and mixer from REAPER (Tools menu, after you change them in EZdrummer).</li>
+<li>Hardware setup (Tools menu). Reconnect drum module MIDI (Tools menu) if your pads go silent. Check REAPER connection is a button in the window.</li>
+<li>Pad levels (Tools menu). Back up and Restore module settings (File menu, Roland modules with bulk dump).</li>
+<li>Metronome: tempo, time signature and click volume fields, <kbd>F5</kbd> start or stop, Tap tempo (press repeatedly). Up and Down arrows change a number.</li>
+<li>Status: the last message. Messages are also spoken by VoiceOver as they happen.</li>
+</ul>
+
+<h2>Kit editor</h2>
+<p>The kit editor opens as a sheet. Move between fields with <kbd>Tab</kbd>.</p>
+<ul>
+<li>Kit name and Module kit number: choosing that kit number on your module loads this kit.</li>
+<li>Switch all drums to room, then the Switch drums button: swaps every drum for one recorded in that room.</li>
+<li>Room amount and Overheads amount: how much room sound, from 0 (dry) to 200 percent.</li>
+<li>Percussion one-shot: an extra pad plays a cowbell, claps, wood block or similar instead of its drum.</li>
+<li>Each drum: choose the sound, its tuning in semitones, and its level in this kit.</li>
+<li>Preview in REAPER, Save (<kbd>Return</kbd>), Cancel (<kbd>Escape</kbd>).</li>
+</ul>
+
+<h2>Pad levels</h2>
+<p>Raise a pad that plays too quietly (for example an older cymbal pad) or lower a loud one. Changes apply while you play, so leave the sheet open and hit the pad as you adjust.</p>
+
+<h2>Drum sounds and expansions</h2>
+<p>Any EZdrummer expansion (EZX) you install appears automatically in the kit editor's drum lists and as a room choice.</p>
+
+<h2>Troubleshooting</h2>
+<ul>
+<li><strong>"REAPER did not answer":</strong> open REAPER. If you just installed or updated, restart REAPER once.</li>
+<li><strong>Pads make no sound:</strong> choose Reconnect drum module MIDI, then hit a pad. Check the module is on and its MIDI cable or USB cable is connected.</li>
+<li><strong>Wrong drums play:</strong> run Learn my kit again for your module, or check your module isn't playing one of its built-in patterns.</li>
+<li><strong>Crackles:</strong> increase the buffer size in your audio interface's settings, or use 48 kHz instead of 96 kHz.</li>
+</ul>
+
+<h2>Where your settings are kept</h2>
+<p>Your kits and settings are in your user folder under Library, Application Support, EDrumKitManager. Module backups are in Documents, TD-12 Backups. Deleting the app keeps them.</p>
+</body>
+</html>

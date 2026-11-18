@@ -1,0 +1,44 @@
+desc:E-Drum Snare Rim Split (soft rim = cross-stick)
+//tags: MIDI processing drums
+// Soft hits on the snare rim (note 40) become cross-stick (note 37); hard ones stay rimshots.
+// Cross-sticks and rimshots get a velocity boost so they cut through. Also drops the quiet head note the TD-12 sends just after a rimshot.
+
+slider1:52<1,127,1>Rim split velocity (softer = cross-stick)
+slider2:60<0,200,1>Ignore quiet head hit after rimshot (ms, 0 = off)
+slider3:50<1,127,1>Quiet head hit max velocity
+slider4:25<0,60,1>Cross-stick volume boost (velocity added)
+slider5:20<0,60,1>Rimshot volume boost (velocity added)
+slider6:40<-1,127,1>Snare rim note (-1 = off)
+slider7:38<-1,127,1>Snare head note
+slider8:37<0,127,1>Cross-stick note sent to EZdrummer
+
+in_pin:none
+out_pin:none
+
+@init
+lastrim = -1000000;
+rimmap = 0;
+pos = 0;
+
+@block
+while (midirecv(ofs, m1, m2, m3)) (
+  st = m1 & 0xF0;
+  pass = 1;
+  st == 0x90 && m3 > 0 && m2 == slider6 && slider6 >= 0 ? (
+    m3 < slider1 ? (
+      m2 = slider8;
+      m3 = min(127, m3 + slider4);
+      rimmap = 1;
+    ) : (
+      m3 = min(127, m3 + slider5);
+      rimmap = 0;
+      lastrim = pos + ofs;
+    );
+  ) : (st == 0x80 || (st == 0x90 && m3 == 0)) && m2 == slider6 && slider6 >= 0 ? (
+    rimmap ? m2 = slider8;
+  ) : st == 0x90 && m3 > 0 && m2 == slider7 && slider2 > 0 ? (
+    (pos + ofs - lastrim) < slider2 * srate / 1000 && m3 <= slider3 ? pass = 0;
+  );
+  pass ? midisend(ofs, m1, m2, m3);
+);
+pos += samplesblock;

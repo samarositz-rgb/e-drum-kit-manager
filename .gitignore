@@ -1,0 +1,10 @@
+bin/
+obj/
+dist/
+app/
+*.user
+.vs/
+node_modules/
+# Private notes for Claude sessions (kept locally and in iCloud, not published)
+CLAUDE.md
+MAC_PORT_NOTES.md

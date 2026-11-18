@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared core: kits, EZdrummer settings, drum catalog, module profiles and the REAPER bridge.
+       No user interface, so a Windows window and a Mac window can both use it. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>TD12KitManager</RootNamespace>
+    <AssemblyName>EDrumKitManager.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DefaultKits.json" LogicalName="DefaultKits.json" />
+    <EmbeddedResource Include="DefaultBase.bin" LogicalName="DefaultBase.bin" />
+    <EmbeddedResource Include="EDrum Kit Bridge.lua" LogicalName="Bridge.lua" />
+    <EmbeddedResource Include="snare_rim_split.jsfx" LogicalName="snare_rim_split.jsfx" />
+    <EmbeddedResource Include="pad_levels.jsfx" LogicalName="pad_levels.jsfx" />
+    <EmbeddedResource Include="logic_scripter.js" LogicalName="logic_scripter.js" />
+  </ItemGroup>
+
+</Project>
