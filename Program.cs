@@ -58,6 +58,17 @@ static class Program
             catch (Exception ex) { File.WriteAllText(args[1], ex.ToString()); }
             return;
         }
+        // Diagnostic: --expansion-kits out.txt shows the kits that would be made for each expansion (nothing is saved).
+        if (args.Length == 2 && args[0] == "--expansion-kits")
+        {
+            Catalog.LoadInstalledLibraries();
+            var lines = new List<string>();
+            foreach (var (lib, name) in Catalog.Rooms.Where(r => !r.Lib.StartsWith("EZX3_EZdrummer3_")))
+                foreach (var k in ExpansionKits.Build(lib, name))
+                    lines.Add(k.Name + ": " + string.Join("; ", k.Slots.Select((s, i) => Catalog.Slots[i].Label + " = " + Catalog.Describe(s))));
+            File.WriteAllLines(args[1], lines);
+            return;
+        }
         // Diagnostic: --speech-check out.txt says whether the NVDA controller client loads and NVDA is running.
         if (args.Length == 2 && args[0] == "--speech-check") { File.WriteAllText(args[1], Speech.Check()); return; }
         // Diagnostic: --genkit profile.json kitIndex out.txt builds one kit for another module profile.

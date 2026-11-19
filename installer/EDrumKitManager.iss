@@ -1,6 +1,6 @@
 ﻿; Installer for E-Drum Kit Manager (Inno Setup 6). Installs for the current user, no admin needed.
 #define AppName "E-Drum Kit Manager"
-#define AppVersion "1.4.0"
+#define AppVersion "1.4.1"
 
 [Setup]
 AppId={{6C4A2E31-7B5D-4E3A-9C1F-2D8E5B7A4F10}

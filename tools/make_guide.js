@@ -57,7 +57,7 @@ function table(headers, rows, widths) {
 const body = [
   new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun("E-Drum Kit Manager")] }),
   new Paragraph({ children: [new TextRun({ text: "The complete guide, with step-by-step lessons", size: 32 })], spacing: { after: 240 } }),
-  p("For Windows and Mac, with REAPER. Version 1.4."),
+  p("For Windows and Mac, with REAPER. Version 1.4.1."),
   p("This guide explains everything in plain words. You don't need to know anything about computers or recording to follow it. If a word looks unfamiliar, look it up in the chapter called \"Words you will see.\""),
   h2("Moving around this guide"),
   p("The guide uses headings at two levels:"),
@@ -492,7 +492,8 @@ const body = [
   ...steps([
     "Buy the expansion, then install it with Toontrack Product Manager or from the download on Toontrack's website. Product Manager doesn't work with screen readers; see \"Install EZdrummer 3\" in Lesson 1 for ways around that.",
     "Close and reopen E-Drum Kit Manager.",
-    "The new drums appear in the kit editor's drum lists, and the new room appears under Switch all drums to room.",
+    "E-Drum Kit Manager makes a ready-to-play kit for each drum set in the expansion and adds them to the end of your kit list. It tells you how many it added.",
+    "The new drums also appear in the kit editor's drum lists, and the new room appears under Switch all drums to room.",
   ]),
   p("There's nothing else to set up. Your pads keep working the same way."),
 

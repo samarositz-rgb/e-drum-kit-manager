@@ -79,6 +79,9 @@ public static partial class Catalog
     static readonly string[] SlotPos =
         ["Kick", "Snare", "Hats", "Racktom1", "Racktom2", "Racktom3", "Floortom1", "Floortom2", "Ride4", "Crash1", "Crash2", "Crash5", "Crash6"];
 
+    /// <summary>EZdrummer position a kit slot normally holds, like "Racktom1".</summary>
+    public static string SlotPosition(int slot) => SlotPos[slot];
+
     /// <summary>
     /// Swaps each drum for one recorded in <paramref name="roomLib"/>, keeping the kit layout (and so the TD-12 map).
     /// Returns the labels of slots the room has no drum for; those keep their current drum.

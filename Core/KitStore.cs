@@ -85,6 +85,34 @@ public sealed class KitStore
         WriteKitFiles();
     }
 
+    static readonly string ExpansionsDoneFile = Path.Combine(AppDir, "expansion-kits.txt");
+
+    /// <summary>
+    /// Adds ready-made kits for each newly installed expansion (once per expansion, so kits the player deletes stay deleted).
+    /// Returns a description per expansion, like "6 drum sets from Drumology EZX".
+    /// </summary>
+    public List<string> AddExpansionKits()
+    {
+        var done = File.Exists(ExpansionsDoneFile) ? File.ReadAllLines(ExpansionsDoneFile).ToHashSet() : [];
+        var added = new List<string>();
+        foreach (var (lib, name) in Catalog.Rooms.Where(r => !r.Lib.StartsWith("EZX3_EZdrummer3_")))
+        {
+            if (!done.Add(lib)) continue;
+            var kits = ExpansionKits.Build(lib, name).Where(k => !Kits.Any(x => x.Name.Equals(k.Name, StringComparison.OrdinalIgnoreCase))).ToList();
+            if (kits.Count == 0) continue;
+            Kits.AddRange(kits);
+            added.Add($"{kits.Count} drum set{(kits.Count == 1 ? "" : "s")} from {name}");
+        }
+        Directory.CreateDirectory(AppDir);
+        File.WriteAllLines(ExpansionsDoneFile, done);
+        if (added.Count > 0)
+        {
+            Save();
+            WriteKitFiles();
+        }
+        return added;
+    }
+
     public void SetBase(EzdState state)
     {
         Directory.CreateDirectory(AppDir);

@@ -202,6 +202,9 @@ public sealed class MainForm : Form
         {
             Status("Could not load kits: " + ex.Message);
         }
+        List<string> newKits = [];
+        try { newKits = store.AddExpansionKits(); }
+        catch (Exception ex) { Status("Could not add kits for a new expansion: " + ex.Message); }
         RefreshList();
         stepCheck.Checked = store.StepWithKitButtons;
         loading = false;
@@ -227,7 +230,8 @@ public sealed class MainForm : Form
             Status($"{store.Kits.Count} kits ready. The REAPER bridge was just installed{(migrated ? " and your TD-12 Kit Manager settings were moved across" : "")}: restart REAPER once so it can receive kits.");
             return;
         }
-        string libraries = expansions.Count == 0 ? "" : $" Expansions found: {string.Join(", ", expansions)}.";
+        string libraries = newKits.Count > 0 ? $" New expansion: added {string.Join(" and ", newKits)} to the end of the list."
+            : expansions.Count == 0 ? "" : $" Expansions found: {string.Join(", ", expansions)}.";
         var reply = await ReaperBridge.WaitForReply(ReaperBridge.Send("PING"), TimeSpan.FromSeconds(2));
         Status(reply is { Ok: true }
             ? $"{store.Kits.Count} kits ready.{libraries} Connected to REAPER."
