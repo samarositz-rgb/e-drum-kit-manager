@@ -57,7 +57,7 @@ function table(headers, rows, widths) {
 const body = [
   new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun("E-Drum Kit Manager")] }),
   new Paragraph({ children: [new TextRun({ text: "The complete guide, with step-by-step lessons", size: 32 })], spacing: { after: 240 } }),
-  p("For Windows and Mac, with REAPER. Version 1.4.1."),
+  p("For Windows and Mac, with REAPER. Version 1.5."),
   p("This guide explains everything in plain words. You don't need to know anything about computers or recording to follow it. If a word looks unfamiliar, look it up in the chapter called \"Words you will see.\""),
   h2("Moving around this guide"),
   p("The guide uses headings at two levels:"),
@@ -92,6 +92,7 @@ const body = [
     "Get a cross-stick sound from a soft hit on the snare rim, and a rimshot from a hard one.",
     "Change drum sets with the kit buttons on your drum module.",
     "Practice with a built-in metronome.",
+    "Browse thousands of EZdrummer grooves by ear and play along with them.",
     "Record your playing in REAPER, then hear it back with any kit.",
     "Use it on Windows with JAWS or NVDA, or on a Mac with VoiceOver.",
     "Use almost any electronic drum module. It knows the same 95 or so modules that EZdrummer 3 does, and it can learn any other module.",
@@ -425,7 +426,35 @@ const body = [
   TipP("You can change the tempo while the metronome is running. Slow songs down to learn them, then speed them up a little at a time."),
   Note("The volume setting needs the free SWS Extension (see Lesson 1). Without it, the click plays at REAPER's normal volume."),
 
-  h1("12. Lesson 9: Record yourself playing"),
+  h1("12. Lesson 9: Play along with grooves"),
+  p("EZdrummer comes with thousands of grooves: short drum parts played by real drummers, in every style from ballads to metal. Kit Manager lets you browse them by ear, play them through your own kit in REAPER, and practise along."),
+  h2("Find a groove"),
+  ...steps([
+    "Make sure REAPER is open.",
+    "Press **Ctrl+G**, or open the Tools menu and choose **Grooves**. The Grooves window opens beside the main window.",
+    "Press **Alt+G** to go to the list. It works like folders: Up and Down move, **Right** opens an item and **Left** closes it.",
+    "The levels are: library (EZdrummer 3, or an expansion), style (Funk, Blues, Metal...), feel (straight 4/4, swing 4/4, 6/8...), song with its tempo (for example Diva Ballad, 57 BPM), part (Intro, Verse, Chorus, Fills, Endings...), and variation.",
+  ]),
+  TipP("To find something quickly, press **Alt+F** and type words, for example **funk**, **shuffle** or **jazz 120**. A number finds songs within 5 BPM of it. Press Enter to jump to the list."),
+  h2("Play it"),
+  ...steps([
+    "Move to a variation, or to a part or song (Kit Manager then plays its first variation).",
+    "Press **Enter**. The groove plays in REAPER on a loop, with the kit you've loaded. Kit Manager says its name, time signature, number of bars and tempo.",
+    "Press **Space** to stop. **F5** also starts and stops.",
+  ]),
+  h2("Slow it down or speed it up"),
+  p("Press **Alt+T** for the tempo and type a number, or press Up and Down. Each new song starts at its own tempo. While a groove plays, the change happens straight away, so you can learn a groove slowly and then bring it up to speed."),
+  p("Uncheck **Loop** (Alt+L) to hear a groove once instead of over and over."),
+  h2("How to practise with grooves"),
+  ...bullets([
+    "**Listen, then copy:** play a groove a few times, stop it, then play it yourself.",
+    "**Play along:** let it loop and play the same groove with it. When you're together, the two sound like one drummer.",
+    "**Learn a song's parts:** go through a song's Intro, Verse, Chorus and Fills in order.",
+  ]),
+  Note("The Grooves window is on Windows for now; it is coming to the Mac version."),
+  Note("The groove plays on your EZdrummer track and is removed when you stop it, so it doesn't stay in your REAPER project. If you record while a groove plays, only your pads are recorded."),
+
+  h1("13. Lesson 10: Record yourself playing"),
   p("Recording lets you listen back to your playing, check your timing, or save a song idea. You record in REAPER, with the kit you've chosen in E-Drum Kit Manager."),
   p("REAPER records what you play as MIDI: which pad you hit, when, and how hard. It doesn't record the sound itself. That has a big advantage: after you record, you can load a different kit and your recording plays back with the new drums."),
   h2("Get ready"),
@@ -456,7 +485,7 @@ const body = [
   ]),
   Note("To record along with a song, play the song on the computer while you record (see \"Playing along with music\"). Only your drums are recorded, not the song."),
 
-  h1("13. Lesson 10: Back up and restore your module"),
+  h1("14. Lesson 11: Back up and restore your module"),
   p("Your module holds your module kits, pad settings and setup. A backup saves all of it on your computer, so you can put it back if something goes wrong or you reset the module."),
   Note("Backups work with the Roland TD-12 for now. You need MIDI cables going both ways: from the module's MIDI Out to the computer, and from the computer to the module's MIDI In."),
   h2("Make a backup"),
@@ -476,7 +505,7 @@ const body = [
     "Don't touch the module while the backup is being sent. E-Drum Kit Manager tells you how long it will take, and tells you again when it's finished.",
   ]),
 
-  h1("14. Lesson 11: Work with EZdrummer directly"),
+  h1("15. Lesson 12: Work with EZdrummer directly"),
   p("You never have to open EZdrummer's screens. But if a sighted friend changes something in EZdrummer for you, you can bring it into E-Drum Kit Manager."),
   h2("Bring in a kit made in EZdrummer"),
   ...steps([
@@ -487,7 +516,7 @@ const body = [
   h2("Update the map and mixer"),
   p("The e-drum map (which pad plays which drum) and EZdrummer's mixer are shared by all your kits. If you change either one in EZdrummer, press **Alt+U** (Update map and mixer from REAPER). Every kit then uses the new settings."),
 
-  h1("15. More drum sounds"),
+  h1("16. More drum sounds"),
   p("Toontrack sells extra drum libraries for EZdrummer, called expansions or EZX. Each one adds new drums, cymbals and often a new room. Browse them on [toontrack.com](https://www.toontrack.com/)."),
   ...steps([
     "Buy the expansion, then install it with Toontrack Product Manager or from the download on Toontrack's website. Product Manager doesn't work with screen readers; see \"Install EZdrummer 3\" in Lesson 1 for ways around that.",
@@ -497,12 +526,12 @@ const body = [
   ]),
   p("There's nothing else to set up. Your pads keep working the same way."),
 
-  h1("16. Playing along with music"),
+  h1("17. Playing along with music"),
   p("You can play along with songs from Apple Music, Spotify, YouTube or any other player. Just play the music on the same computer. As long as your computer sends its sound to the same headphones or speakers as REAPER, you hear the music and your drums together."),
   Note("On a Mac, if REAPER uses your audio interface, set the Mac's sound output to the same interface: open System Settings, then Sound, then Output."),
   TipP("If the music is too loud compared to the drums, turn down the music player's own volume instead of your headphones."),
 
-  h1("17. Keeping it up to date"),
+  h1("18. Keeping it up to date"),
   p("New versions fix problems and add features. On Windows, E-Drum Kit Manager checks for a new version each time it starts, a few seconds after it opens. It only speaks up when there is one."),
   ...steps([
     "When a new version is found, a message tells you which version is available and which one you have.",
@@ -513,7 +542,7 @@ const body = [
   p("To check yourself at any time, open the **Help** menu and choose **Check for updates**. To stop the automatic check, open the Help menu and uncheck **Check for updates at startup**."),
   Note("On a Mac, download new versions from the [E-Drum Kit Manager download page](https://github.com/samarositz-rgb/e-drum-kit-manager/releases/latest)."),
 
-  h1("18. When something goes wrong"),
+  h1("19. When something goes wrong"),
   ...table(["What happens", "What to try"], [
     ["\"REAPER did not answer\"", "Open REAPER. If you just installed or updated E-Drum Kit Manager, close REAPER and open it again, once."],
     ["Pads make no sound", "Press **Alt+X** (Reconnect drum module MIDI), then hit a pad. Check that the module is on and its cable is plugged in. This often happens after another program used your MIDI connection."],
@@ -529,7 +558,7 @@ const body = [
     ["On a Mac: \"E-Drum Kit Manager can't be opened\"", "Open System Settings, then Privacy & Security, and press Open Anyway next to the message about E-Drum Kit Manager."],
   ], [3000, 6360]),
 
-  h1("19. Keyboard shortcuts"),
+  h1("20. Keyboard shortcuts"),
   p("On Windows, **Alt+S** always means Save, in every window that has a Save button. The Mac keys are at the end of this chapter."),
   h2("Windows: main window"),
   ...table(["Key", "What it does"], [
@@ -552,6 +581,7 @@ const body = [
     ["F5", "Start or stop the metronome."],
     ["Alt+O, Alt+G, Alt+V", "Metronome tempo, time signature and volume."],
     ["Alt+A", "Tap tempo."],
+    ["Ctrl+G", "Open the Grooves window."],
     ["F1", "Open the short user guide."],
   ], [3000, 6360]),
   h2("Windows: kit editor"),
@@ -594,7 +624,7 @@ const body = [
     ["Command+Q", "Quit E-Drum Kit Manager."],
   ], [3000, 6360]),
 
-  h1("20. Where your things are saved"),
+  h1("21. Where your things are saved"),
   ...bullets([
     "**Your kits and settings on Windows:** in your user folder, under AppData, Roaming, EDrumKitManager. Uninstalling the program keeps them.",
     "**Your kits and settings on a Mac:** in your home folder, under Library, Application Support, EDrumKitManager. Deleting the app keeps them.",

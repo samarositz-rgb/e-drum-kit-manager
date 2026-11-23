@@ -69,6 +69,17 @@ static class Program
             File.WriteAllLines(args[1], lines);
             return;
         }
+        // Diagnostic: --grooves out.txt writes the groove tree (and reads the first groove's MIDI).
+        if (args.Length == 2 && args[0] == "--grooves")
+        {
+            var lines = new List<string>();
+            GrooveNode? first = null;
+            void Walk(GrooveNode n, int depth) { if (depth < 4 || n.File == null) lines.Add(new string(' ', depth * 2) + n.Name + (n.File != null ? "  [file]" : "")); first ??= n.File != null ? n : null; foreach (var c in n.Children) Walk(c, depth + 1); }
+            foreach (var n in Grooves.Load()) Walk(n, 0);
+            if (first?.File is { } f) { var m = Grooves.ReadMidi(f); lines.Insert(0, $"First groove: {f} -> {m.Bpm} BPM, {m.Beats}/{m.BeatUnit}, {m.LengthQn} QN, {m.Bars} bars, {m.Notes.Count} notes"); }
+            File.WriteAllLines(args[1], lines);
+            return;
+        }
         // Diagnostic: --speech-check out.txt says whether the NVDA controller client loads and NVDA is running.
         if (args.Length == 2 && args[0] == "--speech-check") { File.WriteAllText(args[1], Speech.Check()); return; }
         // Diagnostic: --genkit profile.json kitIndex out.txt builds one kit for another module profile.

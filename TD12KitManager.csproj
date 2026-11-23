@@ -10,7 +10,7 @@
     <AssemblyName>EDrumKitManager</AssemblyName>
     <RootNamespace>TD12KitManager</RootNamespace>
     <Product>E-Drum Kit Manager</Product>
-    <Version>1.4.1</Version>
+    <Version>1.5.0</Version>
     <Company>E-Drum Kit Manager</Company>
     <Description>Accessible drum kit manager for EZdrummer 3 in REAPER</Description>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>

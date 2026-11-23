@@ -121,6 +121,7 @@ public sealed class MainForm : Form
         tools.DropDownItems.AddRange([
             Item("&Hardware setup (drum module, MIDI)...", HardwareSetup),
             Item("&Pad levels...", AdjustPadLevels),
+            Item("&Grooves (play along)...", OpenGrooves, shortcut: Keys.Control | Keys.G),
             stepItem,
             new ToolStripSeparator(),
             Item("&Reconnect drum module MIDI", ReconnectMidi),
@@ -507,6 +508,17 @@ public sealed class MainForm : Form
         {
             Status("The update couldn't be downloaded: " + ex.Message + " You can also download it from the project's GitHub page.");
         }
+    }
+
+    GroovesForm? grooves;
+
+    /// <summary>The groove browser stays open beside the main window; a second Ctrl+G brings it back to the front.</summary>
+    Task OpenGrooves()
+    {
+        if (grooves is { IsDisposed: false }) { grooves.Activate(); return Task.CompletedTask; }
+        grooves = new GroovesForm((waiting, request) => AskReaper(waiting, TimeSpan.FromSeconds(10), request));
+        grooves.Show(this);
+        return Task.CompletedTask;
     }
 
     Task ShowAbout()

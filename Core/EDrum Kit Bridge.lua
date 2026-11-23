@@ -329,6 +329,97 @@ local function continueSysexSend()
   end
 end
 
+-- Grooves: a MIDI item of EZdrummer groove notes on the EZdrummer track, looped, at the groove's tempo.
+local GROOVE_TAG = "EDKM_GROOVE"
+local grooveRepeat -- REAPER's repeat setting before the groove started, restored on stop
+
+local function grooveItems(tr)
+  local found = {}
+  for i = reaper.CountTrackMediaItems(tr) - 1, 0, -1 do
+    local item = reaper.GetTrackMediaItem(tr, i)
+    local _, tag = reaper.GetSetMediaItemInfo_String(item, "P_EXT:edkm", "", false)
+    if tag == GROOVE_TAG then found[#found + 1] = item end
+  end
+  return found
+end
+
+local function removeGrooves(tr)
+  for _, item in ipairs(grooveItems(tr)) do reaper.DeleteTrackMediaItem(tr, item) end
+end
+
+local function loopGroove(item)
+  local s = reaper.GetMediaItemInfo_Value(item, "D_POSITION")
+  local e = s + reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+  reaper.GetSet_LoopTimeRange2(0, true, true, s, e, false)
+  return s
+end
+
+local function playGroove(id, notesPath, lengthQn, bpm, loop, name)
+  local tr = findTarget() or createTrack()
+  if not tr then return status(id, false, "EZdrummer 3 could not be added to a track.") end
+  local data = readFile(notesPath)
+  if not data then return status(id, false, "Groove notes not found.") end
+  reaper.OnStopButton()
+  reaper.Undo_BeginBlock()
+  reaper.PreventUIRefresh(1)
+  removeGrooves(tr)
+  if bpm and bpm > 0 then reaper.SetCurrentBPM(0, bpm, false) end
+  -- After anything already on the track, so a recording there doesn't play along.
+  local startQn = 0
+  for i = 0, reaper.CountTrackMediaItems(tr) - 1 do
+    local item = reaper.GetTrackMediaItem(tr, i)
+    local e = reaper.GetMediaItemInfo_Value(item, "D_POSITION") + reaper.GetMediaItemInfo_Value(item, "D_LENGTH")
+    startQn = math.max(startQn, math.ceil(reaper.TimeMap2_timeToQN(0, e) / 4) * 4 + 4)
+  end
+  local item = reaper.CreateNewMIDIItemInProj(tr, startQn, startQn + lengthQn, true)
+  local take = item and reaper.GetActiveTake(item)
+  if not take then
+    reaper.PreventUIRefresh(-1)
+    reaper.Undo_EndBlock("Groove", -1)
+    return status(id, false, "REAPER could not create the groove.")
+  end
+  reaper.GetSetMediaItemInfo_String(item, "P_EXT:edkm", GROOVE_TAG, true)
+  reaper.GetSetMediaItemTakeInfo_String(take, "P_NAME", "Groove: " .. name, true)
+  for _, l in ipairs(lines(data)) do
+    local qn, len, pitch, vel = l:match("^(%S+) (%S+) (%d+) (%d+)")
+    if qn then
+      local s = reaper.MIDI_GetPPQPosFromProjQN(take, startQn + tonumber(qn))
+      local e = reaper.MIDI_GetPPQPosFromProjQN(take, startQn + tonumber(qn) + tonumber(len))
+      reaper.MIDI_InsertNote(take, false, false, s, e, 9, tonumber(pitch), tonumber(vel), true)
+    end
+  end
+  reaper.MIDI_Sort(take)
+  reaper.PreventUIRefresh(-1)
+  reaper.Undo_EndBlock("Groove: " .. name, -1)
+  local s = loopGroove(item)
+  if grooveRepeat == nil then grooveRepeat = reaper.GetSetRepeat(-1) end
+  reaper.GetSetRepeat(loop and 1 or 0)
+  reaper.SetEditCurPos(s, false, false)
+  reaper.OnPlayButton()
+  status(id, true, "Playing " .. name .. (loop and ", looping" or ""))
+end
+
+local function stopGroove(id)
+  reaper.OnStopButton()
+  local tr = findTarget()
+  if tr then
+    reaper.Undo_BeginBlock()
+    removeGrooves(tr)
+    reaper.Undo_EndBlock("Remove groove", -1)
+  end
+  if grooveRepeat ~= nil then reaper.GetSetRepeat(grooveRepeat) grooveRepeat = nil end
+  reaper.UpdateArrange()
+  status(id, true, "Groove stopped")
+end
+
+local function grooveTempo(id, bpm)
+  reaper.SetCurrentBPM(0, bpm, false)
+  local tr = findTarget()
+  local items = tr and grooveItems(tr) or {}
+  if items[1] then loopGroove(items[1]) end
+  status(id, true, "Tempo " .. math.floor(bpm + 0.5))
+end
+
 local function handleRequest()
   local req = readFile(REQUEST)
   if not req then return end
@@ -373,6 +464,9 @@ local function handleRequest()
     if not tr then status(id, false, "No track with EZdrummer 3 found.")
     elseif ensureRimSplit(tr) then status(id, true, "Snare rim split is on " .. trackName(tr))
     else status(id, false, "Could not add the snare rim split effect.") end
+  elseif cmd == "GROOVE" then playGroove(id, r[3] or "", tonumber(r[4]) or 4, tonumber(r[5]), r[6] == "1", r[7] or "groove")
+  elseif cmd == "GROOVESTOP" then stopGroove(id)
+  elseif cmd == "GROOVETEMPO" then grooveTempo(id, tonumber(r[3]) or 120)
   elseif cmd == "PING" then status(id, true, "Connected to REAPER")
   else status(id, false, "Unknown request " .. cmd) end
 end
