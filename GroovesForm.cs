@@ -15,7 +15,15 @@ sealed class GroovesForm : Form
     readonly System.Windows.Forms.Timer tempoDelay = new() { Interval = 400 };
     readonly Func<string, string[], Task<(bool Ok, string Message)?>> askReaper;
     List<GrooveNode> library = [];
+    Button playButton;
     bool playing;
+
+    /// <summary>One button: Play while stopped, Stop while a groove plays (Alt+P either way).</summary>
+    void SetPlaying(bool on)
+    {
+        playing = on;
+        playButton.Text = on ? "Sto&p" : "&Play";
+    }
     int songBpm;
 
     public GroovesForm(Func<string, string[], Task<(bool Ok, string Message)?>> askReaper)
@@ -31,27 +39,25 @@ sealed class GroovesForm : Form
         var grid = new TableLayoutPanel { ColumnCount = 1, AutoSize = true, Padding = new Padding(10), Dock = DockStyle.Fill };
         grid.Controls.Add(new Label { Text = "&Find:", AutoSize = true });
         grid.Controls.Add(findBox);
-        grid.Controls.Add(new Label { Text = "&Grooves (Enter plays, Space stops):", AutoSize = true, Margin = new Padding(3, 8, 3, 3) });
+        grid.Controls.Add(new Label { Text = "&Grooves (Enter plays, Space plays or stops):", AutoSize = true, Margin = new Padding(3, 8, 3, 3) });
         grid.Controls.Add(tree);
 
         var controls = new RowPanel { AutoSize = true, WrapContents = false, Margin = new Padding(0, 8, 0, 0) };
-        var play = new Button { Text = "&Play", AutoSize = true };
-        var stop = new Button { Text = "St&op", AutoSize = true };
+        playButton = new Button { Text = "&Play", AutoSize = true };
         var close = new Button { Text = "Close", AutoSize = true, DialogResult = DialogResult.Cancel };
         controls.Controls.AddRange([
-            new Label { Text = "&Tempo:", AutoSize = true, Margin = new Padding(3, 7, 2, 3) }, tempo, loop, play, stop, close]);
+            new Label { Text = "&Tempo:", AutoSize = true, Margin = new Padding(3, 7, 2, 3) }, tempo, loop, playButton, close]);
         grid.Controls.Add(controls);
         grid.Controls.Add(status);
         Controls.Add(grid);
         CancelButton = close;
         close.Click += (_, _) => Close();
 
-        play.Click += async (_, _) => await Play();
-        stop.Click += async (_, _) => await Stop();
+        playButton.Click += async (_, _) => await (playing ? Stop() : Play());
         tree.KeyDown += async (_, e) =>
         {
             if (e.KeyCode == Keys.Enter) { e.SuppressKeyPress = true; await Play(); }
-            else if (e.KeyCode == Keys.Space) { e.SuppressKeyPress = true; await Stop(); }
+            else if (e.KeyCode == Keys.Space) { e.SuppressKeyPress = true; await (playing ? Stop() : Play()); }
         };
         tree.AfterSelect += (_, e) => Selected(e.Node);
         findBox.TextChanged += (_, _) => { findDelay.Stop(); findDelay.Start(); };
@@ -153,7 +159,7 @@ sealed class GroovesForm : Form
             loop.Checked ? "1" : "0", name]);
         if (reply is { Ok: true })
         {
-            playing = true;
+            SetPlaying(true);
             Say($"Playing {name}. {midi.Beats}/{midi.BeatUnit}, {midi.Bars} bar{(midi.Bars == 1 ? "" : "s")}, {(int)tempo.Value} BPM.");
         }
         else Say(reply == null ? "REAPER did not answer. Make sure REAPER is open." : "REAPER: " + reply.Value.Message);
@@ -162,7 +168,7 @@ sealed class GroovesForm : Form
     async Task Stop()
     {
         if (!playing) { Say("Nothing is playing."); return; }
-        playing = false;
+        SetPlaying(false);
         var reply = await askReaper("", ["GROOVESTOP"]);
         Say(reply is { Ok: true } ? "Stopped." : "REAPER did not answer.");
     }

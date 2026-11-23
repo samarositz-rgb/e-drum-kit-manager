@@ -440,7 +440,7 @@ const body = [
   ...steps([
     "Move to a variation, or to a part or song (Kit Manager then plays its first variation).",
     "Press **Enter**. The groove plays in REAPER on a loop, with the kit you've loaded. Kit Manager says its name, time signature, number of bars and tempo.",
-    "Press **Space** to stop. **F5** also starts and stops.",
+    "Press **Space** to stop, and Space again to start. The **Play** button (Alt+P) does the same: it says Stop while a groove plays. **F5** also works.",
   ]),
   h2("Slow it down or speed it up"),
   p("Press **Alt+T** for the tempo and type a number, or press Up and Down. Each new song starts at its own tempo. While a groove plays, the change happens straight away, so you can learn a groove slowly and then bring it up to speed."),
