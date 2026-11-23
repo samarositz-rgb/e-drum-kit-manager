@@ -271,6 +271,7 @@ local function setMetronome(id, on, bpm, num, den, volume)
 end
 
 local learn = nil -- { id, untilTime } while waiting for a hit to learn ("Learn my kit")
+local tap = nil -- { id, path, hits, batch, last, untilTime } while recording hits for "find by playing"
 
 -- MIDI recording for diagnostics (MIDILOG request): every incoming event for a few seconds.
 local logUntil, logPath, logId, logEvents = 0, nil, nil, {}
@@ -464,6 +465,9 @@ local function handleRequest()
     if not tr then status(id, false, "No track with EZdrummer 3 found.")
     elseif ensureRimSplit(tr) then status(id, true, "Snare rim split is on " .. trackName(tr))
     else status(id, false, "Could not add the snare rim split effect.") end
+  elseif cmd == "TAPREC" then
+    tap = { id = id, path = r[3] or (dir .. "tap.txt"), hits = {}, batch = {}, untilTime = reaper.time_precise() + (tonumber(r[4]) or 30) }
+    status(id .. ":started", true, "Listening")
   elseif cmd == "GROOVE" then playGroove(id, r[3] or "", tonumber(r[4]) or 4, tonumber(r[5]), r[6] == "1", r[7] or "groove")
   elseif cmd == "GROOVESTOP" then stopGroove(id)
   elseif cmd == "GROOVETEMPO" then grooveTempo(id, tonumber(r[3]) or 120)
@@ -542,6 +546,11 @@ local function handleProgramChange()
     local channel = module("drumChannel", 10)
     if not program and #buf >= 2 and (buf:byte(1) & 0xF0) == 0xC0
        and (channel == 0 or (buf:byte(1) & 0x0F) == channel - 1) then program = buf:byte(2) end
+    -- "Find by playing": note-ons until the player stops for two seconds (events arrive newest first).
+    if tap and #buf >= 3 and (buf:byte(1) & 0xF0) == 0x90 and buf:byte(3) > 0 then
+      table.insert(tap.batch, 1, string.format("%.4f %.0f %d %d", reaper.time_precise(), ts or 0, buf:byte(2), buf:byte(3)))
+      tap.last = reaper.time_precise()
+    end
     -- "Learn my kit": the first hit after the request is the pad being learned.
     if learn and #buf >= 3 and (buf:byte(1) & 0xF0) == 0x90 and buf:byte(3) > 0 then
       status(learn.id, true, string.format("%d %d %d", buf:byte(2), (buf:byte(1) & 0x0F) + 1, buf:byte(3)))
@@ -550,6 +559,10 @@ local function handleProgramChange()
     idx = idx + 1
   end
   if newest then lastSeq = newest end
+  if tap and #tap.batch > 0 then
+    for _, l in ipairs(tap.batch) do tap.hits[#tap.hits + 1] = l end
+    tap.batch = {}
+  end
   -- Events come newest first; keep the backup in the order the TD-12 sent it.
   if sysex and #newSysex > 0 then
     for i = #newSysex, 1, -1 do sysex.parts[#sysex.parts + 1] = newSysex[i] end
@@ -568,9 +581,24 @@ local function finishLog()
   logPath = nil
 end
 
+local function finishTap()
+  if not tap then return end
+  local now = reaper.time_precise()
+  local quiet = tap.last and now - tap.last > 2.0 and #tap.hits >= 4
+  if not quiet and now < tap.untilTime then return end
+  if #tap.hits < 4 then
+    status(tap.id, false, "Not enough hits. Play at least a bar.")
+  else
+    writeFile(tap.path, table.concat(tap.hits, string.char(10)))
+    status(tap.id, true, #tap.hits .. " hits")
+  end
+  tap = nil
+end
+
 local nextCheck = 0
 local function loop()
   handleProgramChange()
+  finishTap()
   finishLog()
   finishSysexRecord()
   if learn and reaper.time_precise() > learn.untilTime then

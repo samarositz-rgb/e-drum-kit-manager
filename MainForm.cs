@@ -1,4 +1,4 @@
-using System.Windows.Forms.Automation;
+﻿using System.Windows.Forms.Automation;
 
 namespace TD12KitManager;
 
@@ -516,7 +516,7 @@ public sealed class MainForm : Form
     Task OpenGrooves()
     {
         if (grooves is { IsDisposed: false }) { grooves.Activate(); return Task.CompletedTask; }
-        grooves = new GroovesForm((waiting, request) => AskReaper(waiting, TimeSpan.FromSeconds(10), request));
+        grooves = new GroovesForm((waiting, request) => AskReaper(waiting, TimeSpan.FromSeconds(10), request), Profile);
         grooves.Show(this);
         return Task.CompletedTask;
     }

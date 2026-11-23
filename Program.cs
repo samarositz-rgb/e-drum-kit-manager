@@ -1,4 +1,4 @@
-namespace TD12KitManager;
+﻿namespace TD12KitManager;
 
 static class Program
 {
@@ -77,6 +77,31 @@ static class Program
             void Walk(GrooveNode n, int depth) { if (depth < 4 || n.File == null) lines.Add(new string(' ', depth * 2) + n.Name + (n.File != null ? "  [file]" : "")); first ??= n.File != null ? n : null; foreach (var c in n.Children) Walk(c, depth + 1); }
             foreach (var n in Grooves.Load()) Walk(n, 0);
             if (first?.File is { } f) { var m = Grooves.ReadMidi(f); lines.Insert(0, $"First groove: {f} -> {m.Bpm} BPM, {m.Beats}/{m.BeatUnit}, {m.LengthQn} QN, {m.Bars} bars, {m.Notes.Count} notes"); }
+            File.WriteAllLines(args[1], lines);
+            return;
+        }
+        // Diagnostic: --groove-test out.txt plays a known groove back unevenly through "find by playing" and builds one song.
+        if (args.Length == 2 && args[0] == "--groove-test")
+        {
+            var lib = Grooves.Load();
+            var lines = new List<string>();
+            var rnd = new Random(1);
+            GrooveNode? FindFile(IEnumerable<GrooveNode> nodes, string part) =>
+                nodes.Select(n => n.File != null && n.File.Contains(part) ? n : FindFile(n.Children, part)).FirstOrDefault(x => x != null);
+            foreach (var probe in new[] { @"057-S162@VERSE\Variation_02", @"505@STRAIGHT_4#4", @"406@SWING_4#4" })
+            {
+                var node = FindFile(lib, probe);
+                if (node?.File == null) { lines.Add("not found: " + probe); continue; }
+                var g = Grooves.ReadMidi(node.File);
+                var played = g.Notes.Select(n => (n.Qn * 60 / g.Bpm + (rnd.NextDouble() - 0.5) * 0.03,
+                    n.Pitch switch { 36 => DrumClass.Kick, 37 or 38 or 40 => DrumClass.Snare, 51 or 53 => DrumClass.Ride, >= 8 and <= 26 or >= 60 and <= 64 => DrumClass.HiHat, _ => DrumClass.Other })).ToList();
+                lines.Add($"Played {node.File} ({g.Bpm} BPM):");
+                foreach (var m in GrooveTools.FindByPlaying(lib, played, 5)) lines.Add($"   {m.Percent}%  {m.Title}  {m.Bpm} BPM  {m.Node.File}");
+            }
+            GrooveNode? Song(IEnumerable<GrooveNode> nodes) =>
+                nodes.Select(n => n.Children.Count > 0 && n.Children.All(c => c.File == null) && n.Children.Any(c => c.Children.Any(v => v.File != null)) ? n : Song(n.Children)).FirstOrDefault(x => x != null);
+            if (Song(lib) is { } song && GrooveTools.BuildSong(song) is { } built)
+                lines.Add($"Song {song.Name}: {built.Midi.LengthQn} QN, {built.Midi.Notes.Count} notes; " + string.Join(", ", built.Sections.Select(x => $"{x.Name}@{x.StartQn}")));
             File.WriteAllLines(args[1], lines);
             return;
         }
