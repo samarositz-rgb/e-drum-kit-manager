@@ -198,7 +198,7 @@ const body = [
     "From now on, the helper starts by itself whenever REAPER starts.",
   ]),
   h3("Tell it about your drum module"),
-  p("On the first start, the **Hardware setup** window opens. Later, you can find it in the Tools menu."),
+  p("On the first start, the **Hardware setup** window opens. Later, you can find it in the Drum module menu (Alt+M)."),
   ...steps([
     "In the **Drum module** list (Alt+M), choose yours. The list has every module EZdrummer 3 knows, by maker and model, for example Alesis Strike Pro, Roland TD-17 or Yamaha DTX6 Series. Type the first letter of the maker to jump through the list. If your module isn't there, see Lesson 2.",
     "Choose the **MIDI input** (Alt+I) your module is connected to. If you use a USB cable, look for your module's name. If you use MIDI cables, choose your audio interface or MIDI adapter.",
@@ -207,7 +207,7 @@ const body = [
   ]),
   TipP("If the MIDI lists are empty, or your pads make no sound, REAPER isn't listening to your MIDI connection yet. In REAPER, open Options, then Preferences, then Audio, then MIDI Inputs. Select your module or interface, press the Applications key (or Shift+F10), and choose **Enable input for track record input**. Then open Hardware setup again."),
   h3("Check that everything is talking"),
-  p("Press **Alt+C** (Check REAPER connection). E-Drum Kit Manager should say that REAPER is connected. If it says REAPER didn't answer, make sure REAPER is open, and that you restarted it once after installing."),
+  p("Press **Alt+C** (Check connection), or choose it in the EZdrummer menu. E-Drum Kit Manager should say that REAPER is connected. If it says REAPER didn't answer, make sure REAPER is open, and that you restarted it once after installing."),
 
   h2("On a Mac"),
   p("The Mac programs are installed a little differently. Many come as a disk image, a file ending in .dmg. When you open one, it appears like a drive in Finder, and you copy the program from it into your Applications folder."),
@@ -269,7 +269,7 @@ const body = [
   p("If your module isn't in the Drum module list, or the pads play the wrong drums, you can teach E-Drum Kit Manager your module by hitting each pad once. This is called **Learn my kit**. It takes about five minutes."),
   ...steps([
     "Make sure REAPER is open and your module is connected.",
-    "Open the Tools menu and choose **Hardware setup**.",
+    "Open the Drum module menu (Alt+M) and choose **Hardware setup**. On a Mac, it's in the Tools menu.",
     "Choose your module's MIDI input, then press **Alt+L** (Learn a new module).",
     "Type your module's name, and how many kits it has.",
     "Press **Alt+S** (Start learning).",
@@ -294,6 +294,7 @@ const body = [
   ]),
   p("To find out which drums are in a kit, press **Alt+D** to read the kit details, or press **Tab** once from the kit list. The details list every drum and cymbal and the room it came from. Press Shift+Tab to go back to the kit list."),
   TipP("**On a Mac:** press **Return** instead of Enter to load a kit. Use Tab to move between the kit list, the kit details and the buttons. The menu bar has every command: press VO+M to reach it."),
+  p("Every command is also in the menu bar. Press Alt to reach it: **File**, **Kits**, **Practice** (grooves and metronome), **Drum module** (hardware setup, pad levels, MIDI and backups), **EZdrummer** (import, map and mixer, connection) and **Help**."),
   h2("The kits that come with it"),
   p("The list starts with the seven drum sets that come with EZdrummer 3:"),
   ...bullets([
@@ -319,7 +320,7 @@ const body = [
   h2("Way 1: Step through the list"),
   p("With this turned on, your module's kit up and down buttons move through E-Drum Kit Manager's kit list, one kit at a time."),
   ...steps([
-    "In the main window, press **Alt+W** to check the box called **Step through kits with the module's kit buttons**. You can also find it in the Tools menu.",
+    "In the main window, press **Alt+W** to check the box called **Step through kits with the module's kit buttons**. You can also find it in the Drum module menu.",
     "Sit at your kit. Press your module's kit up or kit down button.",
     "The next kit in the list loads. If E-Drum Kit Manager is open, it says the kit's name.",
   ]),
@@ -384,7 +385,7 @@ const body = [
   p("Older pads, or pads from different makers, often play quieter or louder than the rest. A cymbal pad that's a few years older than the others might need a harder hit to sound right. Pad levels fix this for every kit at once."),
   ...steps([
     "Make sure REAPER is open.",
-    "Press **Alt+J** (Adjust pad levels). You can also find it in the Tools menu.",
+    "Press **Alt+J** (Adjust pad levels). You can also find it in the Drum module menu.",
     "Each pad has a number. 100 means no change. 130 makes that pad play 30 percent harder than you hit it, and 80 makes it play softer. You can choose from 25 to 300.",
     "Leave the window open, and hit the pad while you change its number. The change works right away.",
     "Press **Alt+R** to put every pad back to 100 if you want to start over.",
@@ -414,7 +415,7 @@ const body = [
   Note("Some modules also send a quiet snare sound right after a rimshot. E-Drum Kit Manager removes it, so a rimshot doesn't sound doubled."),
 
   h1("11. Lesson 8: Practice with the metronome"),
-  p("The metronome plays a click in your headphones to help you keep time. It's in the main window, below the buttons, and in the Metronome menu."),
+  p("The metronome plays a click in your headphones to help you keep time. It's in the main window, below the buttons, and in the Practice menu."),
   ...steps([
     "Press **Alt+O** to go to the tempo, and type how many beats per minute you want, for example 90.",
     "Press **Alt+G** to choose the time signature, for example 4/4 or 3/4.",
@@ -431,7 +432,7 @@ const body = [
   h2("Find a groove"),
   ...steps([
     "Make sure REAPER is open.",
-    "Press **Ctrl+G**, or open the Tools menu and choose **Grooves**. The Grooves window opens beside the main window.",
+    "Press **Ctrl+G**, or open the Practice menu and choose **Grooves**. The Grooves window opens beside the main window.",
     "Press **Alt+G** to go to the list. It works like folders: Up and Down move, **Right** opens an item and **Left** closes it.",
     "The levels are: library (EZdrummer 3, or an expansion), style (Funk, Blues, Metal...), feel (straight 4/4, swing 4/4, 6/8...), song with its tempo (for example Diva Ballad, 57 BPM), part (Intro, Verse, Chorus, Fills, Endings...), and variation.",
   ]),
@@ -509,7 +510,7 @@ const body = [
   h2("Make a backup"),
   ...steps([
     "Make sure REAPER is open.",
-    "In E-Drum Kit Manager, press **Alt+B** (Back up module settings). On a Mac, it's in the File menu.",
+    "In E-Drum Kit Manager, press **Alt+B** (Back up module settings). It's also in the Drum module menu (on a Mac, the File menu).",
     "A message explains the steps for your module. Press **OK**.",
     "Start the bulk dump on the module. On the TD-12, press **SETUP**, then **F1** (MIDI), then **F5** (BULK), then **F5** again (EXECUTE).",
     "Wait. A full backup can take a few minutes. E-Drum Kit Manager tells you when it's saved and whether every part arrived safely.",
@@ -517,7 +518,7 @@ const body = [
   p("Backups are saved in your Documents folder, in a folder called **TD-12 Backups**. Each file has the date and time in its name."),
   h2("Restore a backup"),
   ...steps([
-    "Press **Alt+R** (Restore module backup). On a Mac, it's in the File menu.",
+    "Press **Alt+R** (Restore module backup). It's also in the Drum module menu (on a Mac, the File menu).",
     "Choose the backup file you want.",
     "You're warned that this replaces the settings on the module. Choose **Yes** to go ahead.",
     "Don't touch the module while the backup is being sent. E-Drum Kit Manager tells you how long it will take, and tells you again when it's finished.",
@@ -528,11 +529,11 @@ const body = [
   h2("Bring in a kit made in EZdrummer"),
   ...steps([
     "Set up the kit in EZdrummer in REAPER.",
-    "In E-Drum Kit Manager, open the File menu and choose **Import current EZdrummer kit from REAPER**.",
+    "In E-Drum Kit Manager, open the EZdrummer menu (Alt+Z) and choose **Import current kit from EZdrummer**.",
     "The kit editor opens with that kit. Give it a name and press **Alt+S** to save.",
   ]),
   h2("Update the map and mixer"),
-  p("The e-drum map (which pad plays which drum) and EZdrummer's mixer are shared by all your kits. If you change either one in EZdrummer, press **Alt+U** (Update map and mixer from REAPER). Every kit then uses the new settings."),
+  p("The e-drum map (which pad plays which drum) and EZdrummer's mixer are shared by all your kits. If you change either one in EZdrummer, press **Alt+U** (Update map and mixer from EZdrummer). Every kit then uses the new settings."),
 
   h1("16. More drum sounds"),
   p("Toontrack sells extra drum libraries for EZdrummer, called expansions or EZX. Each one adds new drums, cymbals and often a new room. Browse them on [toontrack.com](https://www.toontrack.com/)."),
@@ -580,7 +581,7 @@ const body = [
   p("On Windows, **Alt+S** always means Save, in every window that has a Save button. The Mac keys are at the end of this chapter."),
   h2("Windows: main window"),
   ...table(["Key", "What it does"], [
-    ["Alt", "Opens the menu bar: File, Kit, Tools, Metronome and Help."],
+    ["Alt", "Opens the menu bar: File, Kits, Practice, Drum module, EZdrummer and Help."],
     ["Alt+I", "Go to the kit list."],
     ["Enter (in the kit list)", "Load the selected kit in REAPER."],
     ["Tab (from the kit list), or Alt+D", "Read the kit details."],
@@ -593,8 +594,8 @@ const body = [
     ["Alt+J", "Pad levels."],
     ["Alt+W", "Turn stepping with the module's kit buttons on or off."],
     ["Alt+X", "Reconnect drum module MIDI."],
-    ["Alt+U", "Update the map and mixer from REAPER."],
-    ["Alt+C", "Check the REAPER connection."],
+    ["Alt+U", "Update the map and mixer from EZdrummer."],
+    ["Alt+C", "Check the connection."],
     ["Alt+B, Alt+R", "Back up or restore your module."],
     ["F5", "Start or stop the metronome."],
     ["Alt+O, Alt+G, Alt+V", "Metronome tempo, time signature and volume."],

@@ -32,7 +32,7 @@ public sealed class MainForm : Form
         KeyPreview = true;
 
         var root = new TableLayoutPanel { ColumnCount = 2, AutoSize = true, Padding = new Padding(10), Dock = DockStyle.Fill };
-        root.Controls.Add(new Label { Text = "Kit l&ist (Enter loads the kit in REAPER):", AutoSize = true }, 0, 0);
+        root.Controls.Add(new Label { Text = "Kit l&ist (Enter loads the kit):", AutoSize = true }, 0, 0);
         root.Controls.Add(new Label { Text = "Kit &details:", AutoSize = true }, 1, 0);
         root.Controls.Add(kitList, 0, 1);
         root.Controls.Add(details, 1, 1);
@@ -46,14 +46,14 @@ public sealed class MainForm : Form
             if (usesReaper) reaperButtons.Add(b);
             return b;
         }
-        Add("&Load in REAPER", LoadSelected, true);
+        Add("&Load kit", LoadSelected, true);
         Add("&New kit...", () => NewKit(null));
         Add("&Edit kit...", EditSelected);
-        Add("Du&plicate", Duplicate);
+        Add("Duplicate (Ctrl+D)", Duplicate);
         Add("Delete (Del key)", DeleteSelected);
-        Add("Import current EZdrummer kit from REAPER", ImportFromReaper, true);
-        Add("&Update map and mixer from REAPER", UpdateBase, true);
-        Add("&Check REAPER connection", Ping, true);
+        Add("Import current kit from EZdrummer", ImportFromReaper, true);
+        Add("&Update map and mixer from EZdrummer", UpdateBase, true);
+        Add("&Check connection", Ping, true);
         Add("Hardware setup (drum module, MIDI)...", HardwareSetup, true);
         Add("Reconnect drum module MIDI (&X)", ReconnectMidi, true);
         Add("Ad&just pad levels...", AdjustPadLevels);
@@ -94,19 +94,16 @@ public sealed class MainForm : Form
             if (keys != null) item.ShortcutKeyDisplayString = keys;
             return item;
         }
+        // Grouped by what you're doing; nothing here is tied to one recording program.
         var file = new ToolStripMenuItem("&File");
         file.DropDownItems.AddRange([
             Item("&New kit...", () => NewKit(null), "Ctrl+N"),
-            Item("&Import current EZdrummer kit from REAPER", ImportFromReaper),
-            new ToolStripSeparator(),
-            Item("&Back up module settings...", BackupTd12),
-            Item("&Restore module backup...", RestoreTd12),
             new ToolStripSeparator(),
             Item("E&xit", () => { Close(); return Task.CompletedTask; }, "Alt+F4"),
         ]);
-        var kitMenu = new ToolStripMenuItem("&Kit");
+        var kitMenu = new ToolStripMenuItem("&Kits");
         kitMenu.DropDownItems.AddRange([
-            Item("&Load in REAPER", LoadSelected, "Enter"),
+            Item("&Load", LoadSelected, "Enter"),
             Item("&Edit...", EditSelected, "F2"),
             Item("Du&plicate", Duplicate, shortcut: Keys.Control | Keys.D),
             Item("&Delete", DeleteSelected, "Del"),
@@ -114,24 +111,32 @@ public sealed class MainForm : Form
             Item("Move &up", () => { MoveSelected(-1); return Task.CompletedTask; }, "Alt+Up"),
             Item("Move do&wn", () => { MoveSelected(1); return Task.CompletedTask; }, "Alt+Down"),
         ]);
+        var practice = new ToolStripMenuItem("&Practice");
+        practice.DropDownItems.AddRange([
+            Item("&Grooves (play along)...", OpenGrooves, shortcut: Keys.Control | Keys.G),
+            new ToolStripSeparator(),
+            Item("&Start or stop metronome", () => metronome.Toggle(), "F5"),
+            Item("&Tap tempo", () => { metronome.Tap(); return Task.CompletedTask; }),
+        ]);
         var stepItem = new ToolStripMenuItem("&Step through kits with the module's kit buttons") { CheckOnClick = true };
         stepItem.Click += (_, _) => stepCheck.Checked = stepItem.Checked;
-        var tools = new ToolStripMenuItem("&Tools");
-        tools.DropDownOpening += (_, _) => stepItem.Checked = stepCheck.Checked;
-        tools.DropDownItems.AddRange([
+        var module = new ToolStripMenuItem("Drum &module");
+        module.DropDownOpening += (_, _) => stepItem.Checked = stepCheck.Checked;
+        module.DropDownItems.AddRange([
             Item("&Hardware setup (drum module, MIDI)...", HardwareSetup),
             Item("&Pad levels...", AdjustPadLevels),
-            Item("&Grooves (play along)...", OpenGrooves, shortcut: Keys.Control | Keys.G),
             stepItem,
             new ToolStripSeparator(),
             Item("&Reconnect drum module MIDI", ReconnectMidi),
-            Item("&Update map and mixer from REAPER", UpdateBase),
-            Item("&Check REAPER connection", Ping),
+            new ToolStripSeparator(),
+            Item("&Back up module settings...", BackupTd12),
+            Item("Res&tore module backup...", RestoreTd12),
         ]);
-        var metroMenu = new ToolStripMenuItem("&Metronome");
-        metroMenu.DropDownItems.AddRange([
-            Item("&Start or stop", () => metronome.Toggle(), "F5"),
-            Item("&Tap tempo", () => { metronome.Tap(); return Task.CompletedTask; }),
+        var ezdrummer = new ToolStripMenuItem("E&Zdrummer");
+        ezdrummer.DropDownItems.AddRange([
+            Item("&Import current kit from EZdrummer", ImportFromReaper),
+            Item("&Update map and mixer from EZdrummer", UpdateBase),
+            Item("&Check connection", Ping),
         ]);
         var updatesItem = new ToolStripMenuItem("Check for updates at &startup") { CheckOnClick = true, Checked = Updates.CheckAtStartup };
         updatesItem.Click += (_, _) => { Updates.CheckAtStartup = updatesItem.Checked; Status(updatesItem.Checked ? "E-Drum Kit Manager will check for updates when it starts." : "Automatic update checks are off. You can still check from the Help menu."); };
@@ -143,7 +148,7 @@ public sealed class MainForm : Form
             new ToolStripSeparator(),
             Item("&About E-Drum Kit Manager", ShowAbout),
         ]);
-        menu.Items.AddRange([file, kitMenu, tools, metroMenu, help]);
+        menu.Items.AddRange([file, kitMenu, practice, module, ezdrummer, help]);
         MainMenuStrip = menu;
 
         var outer = new TableLayoutPanel { ColumnCount = 1, AutoSize = true, Dock = DockStyle.Fill, Padding = Padding.Empty };
